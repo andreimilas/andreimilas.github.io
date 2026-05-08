@@ -47,7 +47,7 @@ const experience = [
     link: "https://groundspeedlabs.com",
     bullets: [
       "Founded an indie mobile software studio building focused, well-crafted apps.",
-      "Leading product, design and engineering end-to-end on Android.",
+      "Leading product, design and engineering.",
     ],
   },
   {
