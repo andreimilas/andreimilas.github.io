@@ -1,0 +1,56 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/configure-pages@v5
+
+      - run: bun ci
+      - run: bun run build
+
+      - id: pages-output
+        run: |
+          if [ -d dist/client ]; then
+            echo "path=dist/client" >> "$GITHUB_OUTPUT"
+          elif [ -d .output/public ]; then
+            echo "path=.output/public" >> "$GITHUB_OUTPUT"
+          elif [ -d dist ]; then
+            echo "path=dist" >> "$GITHUB_OUTPUT"
+          else
+            echo "No static output directory found" >&2
+            exit 1
+          fi
+
+      - run: touch "${{ steps.pages-output.outputs.path }}/.nojekyll"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ steps.pages-output.outputs.path }}
+          include-hidden-files: true
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

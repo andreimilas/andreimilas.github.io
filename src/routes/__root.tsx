@@ -72,14 +72,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Andrei Milas — CTO, Founder & Cloud / DevSecOps Leader" },
+      {
+        name: "description",
+        content:
+          "Andrei Milas is a CTO, founder, cloud architect, and DevSecOps leader building secure cloud-native platforms.",
+      },
+      { name: "author", content: "Andrei Milas" },
+      { property: "og:title", content: "Andrei Milas — CV" },
+      {
+        property: "og:description",
+        content:
+          "Cloud, security, platform engineering, and technical leadership experience.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
